@@ -35,3 +35,4 @@ target/
 node_modules/
 .env
 application.properties
+.DS_Store

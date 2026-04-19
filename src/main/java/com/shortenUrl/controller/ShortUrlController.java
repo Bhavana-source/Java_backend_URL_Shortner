@@ -16,8 +16,11 @@ import com.shortenUrl.dto.ShortUrlRequestDto;
 import com.shortenUrl.dto.ShortUrlResponseDto;
 import com.shortenUrl.service.ShortCodeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "URL Shortener API", description = "Operations for URL shortening")
 @RestController
 @RequestMapping("api")
 public class ShortUrlController {
@@ -26,13 +29,15 @@ public class ShortUrlController {
 	public ShortUrlController(ShortCodeService service) {
 		this.service = service;
 	}
-
+	
+	@Operation(summary = "Create short URL", description = "Generates a short URL from a long URL")
 	@PostMapping("/generateShortUrl")
 	public ResponseEntity<ShortUrlResponseDto> createShortUrl(@RequestBody @Valid ShortUrlRequestDto dto) {
 		ShortUrlResponseDto result = service.createShortUrl(dto);
 		return ResponseEntity.ok(result);
 	}
 	
+	@Operation(summary = "Redirect to original URL", description = "Redirects to the original URL using short code")
 	@GetMapping("/{shortCode}")
 	public ResponseEntity<String> redirectUrl(@PathVariable String shortCode){
 		String originalUrl = service.getOriginalUrl(shortCode);

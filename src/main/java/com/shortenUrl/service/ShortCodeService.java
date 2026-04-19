@@ -8,6 +8,7 @@ import com.shortenUrl.Mapper.ShortUrlMapper;
 import com.shortenUrl.dto.ShortUrlRequestDto;
 import com.shortenUrl.dto.ShortUrlResponseDto;
 import com.shortenUrl.entity.ShortUrlEntity;
+import com.shortenUrl.exception.ShortUrlNotFoundException;
 import com.shortenUrl.repository.ShortUrlRepo;
 import com.shortenUrl.util.RandomStringGenerator;
 
@@ -41,7 +42,9 @@ public class ShortCodeService {
 	}
 	
 	public String getOriginalUrl(String shortCode) {
-		ShortUrlEntity entity = shortUrlRepo.findByShortCode(shortCode).orElseThrow(() -> new RuntimeException("Short URL not found"));
+		ShortUrlEntity entity = shortUrlRepo.findByShortCode(shortCode).orElseThrow(() -> new ShortUrlNotFoundException("Short URL not found"));
+		entity.setClickCount(entity.getClickCount() + 1);
+		shortUrlRepo.save(entity);
 		return entity.getOriginalUrl();
 	}
 

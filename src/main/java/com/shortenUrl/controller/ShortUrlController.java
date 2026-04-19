@@ -16,6 +16,8 @@ import com.shortenUrl.dto.ShortUrlRequestDto;
 import com.shortenUrl.dto.ShortUrlResponseDto;
 import com.shortenUrl.service.ShortCodeService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api")
 public class ShortUrlController {
@@ -26,7 +28,7 @@ public class ShortUrlController {
 	}
 
 	@PostMapping("/generateShortUrl")
-	public ResponseEntity<ShortUrlResponseDto> createShortUrl(@RequestBody ShortUrlRequestDto dto) {
+	public ResponseEntity<ShortUrlResponseDto> createShortUrl(@RequestBody @Valid ShortUrlRequestDto dto) {
 		ShortUrlResponseDto result = service.createShortUrl(dto);
 		return ResponseEntity.ok(result);
 	}

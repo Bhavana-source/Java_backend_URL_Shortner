@@ -23,7 +23,7 @@ public class ShortUrlMapper {
 	}
 
 	public ShortUrlResponseDto toResponse(ShortUrlEntity shortUrl) {
-		String shortUrlLink = "http://localhost:8080/" + shortUrl.getShortCode();
+		String shortUrlLink = "http://localhost:8080/api/" + shortUrl.getShortCode();
 
 		return new ShortUrlResponseDto(shortUrl.getOriginalUrl(), shortUrl.getShortCode(), shortUrlLink);
 	}

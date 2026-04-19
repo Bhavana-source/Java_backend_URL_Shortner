@@ -33,7 +33,7 @@ Response:
 {
   "originalUrl": "https://www.google.com",
   "shortCode": "Ab12Xy",
-  "shortUrl": "http://localhost:8080/Ab12Xy"
+  "shortUrl": "http://localhost:8080/api/Ab12Xy"
 }
 ### 2. Redirect to Original URL
 

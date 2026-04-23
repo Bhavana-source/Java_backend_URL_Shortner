@@ -1,6 +1,7 @@
 package com.shortenUrl.dto;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,9 +16,9 @@ public class ShortUrlDto {
 	
 	String shortCode;
 	
-	Timestamp createdAt;
+	LocalDateTime createdAt;
 	
-	Timestamp expiresAt;
+	LocalDateTime expiresAt;
 	
 	long clickCount;
 	

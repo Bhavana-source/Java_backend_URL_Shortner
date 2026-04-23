@@ -19,5 +19,7 @@ public class ShortUrlRequestDto {
 	    )
 	@Schema(description = "Original long URL", example = "https://www.google.com")
 	String originalUrl;
+	
+	String customCode;
 
 }

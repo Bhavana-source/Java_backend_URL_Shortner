@@ -29,8 +29,8 @@ public class GlobalExceptionHandler {
 		
 	}
 	
-	@ExceptionHandler(ShortUrlNotFoundException.class)
-	public ResponseEntity<ErrorResponse> shortUrlNotFoundException(ShortUrlNotFoundException ex,HttpServletRequest request) {
+	@ExceptionHandler(URLException.class)
+	public ResponseEntity<ErrorResponse> shortUrlNotFoundException(URLException ex,HttpServletRequest request) {
 		
 		ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now().toString(),

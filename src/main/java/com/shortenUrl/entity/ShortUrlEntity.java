@@ -40,4 +40,5 @@ public class ShortUrlEntity {
 	
 	@Column(name = "is_active")
 	Boolean isActive;
+	
 }

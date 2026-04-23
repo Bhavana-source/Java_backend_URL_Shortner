@@ -18,7 +18,7 @@ public class ShortUrlMapper {
 		shortUrl.setCreatedAt(LocalDateTime.now());
 		shortUrl.setClickCount(0L);
 		shortUrl.setIsActive(true);
-		shortUrl.setExpiresAt(null);
+		shortUrl.setExpiresAt(LocalDateTime.now().plusDays(7));
 		return shortUrl;
 	}
 

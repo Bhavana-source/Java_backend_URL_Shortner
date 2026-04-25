@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shortenUrl.dto.ShortUrlDto;
 import com.shortenUrl.dto.ShortUrlRequestDto;
 import com.shortenUrl.dto.ShortUrlResponseDto;
+import com.shortenUrl.service.ClickEventProducer;
 import com.shortenUrl.service.ShortCodeService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,11 @@ import jakarta.validation.Valid;
 @RequestMapping("api")
 public class ShortUrlController {
 	private final ShortCodeService service;
+	private final ClickEventProducer clickEventProducer;
 
-	public ShortUrlController(ShortCodeService service) {
+	public ShortUrlController(ShortCodeService service, ClickEventProducer clickEventProducer) {
 		this.service = service;
+		this.clickEventProducer = clickEventProducer;
 	}
 	
 	@Operation(summary = "Create short URL", description = "Generates a short URL from a long URL")
@@ -40,13 +43,27 @@ public class ShortUrlController {
 	}
 	
 	@Operation(summary = "Redirect to original URL", description = "Redirects to the original URL using short code")
+//	@GetMapping("/{shortCode}")
+//	public ResponseEntity<String> redirectUrl(@PathVariable String shortCode){
+//		String originalUrl = service.getOriginalUrl(shortCode);
+//		service.incrementCount(shortCode);
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setLocation(URI.create(originalUrl));
+//		return new ResponseEntity<>(headers, HttpStatus.FOUND);
+//	}
+	
 	@GetMapping("/{shortCode}")
-	public ResponseEntity<String> redirectUrl(@PathVariable String shortCode){
-		String originalUrl = service.getOriginalUrl(shortCode);
-		service.incrementCount(shortCode);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create(originalUrl));
-		return new ResponseEntity<>(headers, HttpStatus.FOUND);
+	public ResponseEntity<Void> redirectUrl(@PathVariable String shortCode){
+
+	    String originalUrl = service.getOriginalUrl(shortCode);
+
+	    // 🔥 send event instead of DB update
+	    clickEventProducer.sendClickEvent(shortCode);
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setLocation(URI.create(originalUrl));
+
+	    return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
 	
 	@GetMapping("/urls/{shortCode}/stats")

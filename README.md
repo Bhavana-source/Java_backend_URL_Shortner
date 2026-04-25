@@ -1,79 +1,79 @@
-# 🚀 URL Shortener (Spring Boot)
+# 🔗 URL Shortener System
 
-A scalable URL shortener built using Java, Spring Boot, and PostgreSQL.
-This application allows users to convert long URLs into short links and redirects users to the original URL when accessed.
+A scalable backend system to generate and manage short URLs, built using Java and Spring Boot.  
+Designed with caching and event-driven architecture for performance and scalability.
 
-## ✨ Features
-🔗 Create short URL from long URL
-🔁 Redirect short URL to original URL
-♻️ Duplicate URL handling (returns existing short URL)
-📊 Click count tracking (if implemented)
-⚡ Clean layered architecture (Controller, Service, Repository)
+---
 
-## 🏗️ Tech Stack
-Java 17
-Spring Boot
-Spring Data JPA
-PostgreSQL
-Maven
+## 🚀 Features
+
+- Generate short URLs for long links
+- Custom alias support (user-defined short codes)
+- URL redirection to original link
+- URL expiry handling
+- Soft delete using isActive flag
+- Analytics API (click count, last accessed time)
+- Global exception handling & validation
+- Swagger API documentation
+
+---
+
+## ⚡ Performance & Scalability
+
+- **Redis Caching** (cache-aside pattern) to reduce DB load
+- **Apache Kafka Integration** for asynchronous click analytics
+- Optimized database queries using PostgreSQL
+
+---
+
+## 🏗️ Architecture
+
+User Request → Spring Boot API → Redis Cache → PostgreSQL  
+                ↓  
+               Kafka → Consumer → DB (Analytics)
+
+---
+
+## 🛠️ Tech Stack
+
+- Java, Spring Boot
+- PostgreSQL
+- Redis
+- Apache Kafka
+- JPA / Hibernate
+- Swagger
+
+---
 
 ## 📌 API Endpoints
-### 1. Create Short URL
 
-POST /api/v1/urls
+| Method | Endpoint | Description |
+|--------|--------|-------------|
+| POST | /shorten | Create short URL |
+| GET | /{shortCode} | Redirect to original URL |
+| GET | /urls/{shortCode}/stats | Get analytics |
+| PATCH | /urls/{shortCode}/deactivate | Deactivate URL |
 
-Request:
+---
 
-{
-  "originalUrl": "https://www.google.com"
-}
+## ▶️ How to Run
 
-Response:
+1. Clone the repo  
+2. Start PostgreSQL, Redis, Kafka  
+3. Run Spring Boot application  
+4. Open Swagger UI  
 
-{
-  "originalUrl": "https://www.google.com",
-  "shortCode": "Ab12Xy",
-  "shortUrl": "http://localhost:8080/api/Ab12Xy"
-}
-### 2. Redirect to Original URL
+---
 
-GET /{shortCode}
+## 📊 Future Improvements
 
-Example:
+- Rate limiting
+- User authentication
+- Dashboard for analytics
+- Distributed deployment
 
-http://localhost:8080/Ab12Xy
+---
 
-Redirects to:
+## 👤 Author
 
-https://www.google.com
-
-## 🗄️ Database Schema
-
-Table: short_urls
-
-Column	Description
-id	Primary key
-original_url	Original long URL
-short_code	Unique short code
-created_at	Creation timestamp
-click_count	Number of clicks
-is_active	Status flag
-
-## ⚙️ How to Run Locally
-Clone the repository
-git clone https://github.com/YOUR_USERNAME/springboot-url-shortener.git
-Configure PostgreSQL in application.properties
-Run the application
-mvn spring-boot:run
-Test APIs using Postman
-
-## 📈 Future Improvements
-JWT Authentication
-Redis caching
-URL expiry support
-Docker containerization
-Deployment to cloud (AWS / Render / Railway)
-Analytics dashboard
-
-## Author
-Gangarapu Bhavana
+Bhavana
